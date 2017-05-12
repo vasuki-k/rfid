@@ -37,7 +37,7 @@ public class TagReportListenerImplementation implements TagReportListener {
             long last_time = Long.parseLong(cur_time) - System.currentTimeMillis();
             if (last_time < 775000) {
                 System.out.println("not in shelf");
-                s = "{\"uuid\":\"" + cur_uuid + "\",\"reader\":\"FLR1SHF\",\"antenna\":\"" + cur_ant + "\",\"prevreadtime\":"+ 0 +",\"readtime\":" + Long.parseLong(cur_time) + ",\"status\":\"Exit\"}";
+                s = "{\"uuid\":\'" + cur_uuid + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + cur_ant + "\',\"prevreadtime\":"+ 0 +",\"readtime\":" + Long.parseLong(cur_time) + ",\"status\":\'Exit\'}";
                // System.out.println(s);
                 try {
 
