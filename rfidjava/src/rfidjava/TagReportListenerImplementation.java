@@ -54,6 +54,7 @@ public class TagReportListenerImplementation implements TagReportListener {
                     } catch (JSONException ex) {
                         Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                       map.remove(cur_uuid);
                 } catch (JSONException ex) {
                     // Logger.getLogger(RFIDLaunch.class.getName()).log(Level.SEVERE, null, ex);
                 }
