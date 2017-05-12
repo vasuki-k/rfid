@@ -20,8 +20,7 @@ public class ReadTagsPeriodicTrigger {
             String hostname = (SampleProperties.hostname);
 
             if (hostname == null) {
-                throw new Exception("Must specify the '"
-                        + SampleProperties.hostname + "' property");
+                throw new Exception("Must specify the '"+ SampleProperties.hostname + "' property");
             }
 
             ImpinjReader reader = new ImpinjReader();
@@ -51,10 +50,10 @@ public class ReadTagsPeriodicTrigger {
             report.setMode(ReportMode.BatchAfterStop);
             
             settings.getAutoStart().setMode(AutoStartMode.Periodic);
-            settings.getAutoStart().setPeriodInMs(2000);
+            settings.getAutoStart().setPeriodInMs(3000);
             
             settings.getAutoStop().setMode(AutoStopMode.Duration);
-            settings.getAutoStop().setDurationInMs(2000);
+            settings.getAutoStop().setDurationInMs(3000);
 
             reader.setTagReportListener(new TagReportListenerImplementation());
 
