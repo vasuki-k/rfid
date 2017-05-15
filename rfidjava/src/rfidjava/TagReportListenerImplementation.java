@@ -29,22 +29,23 @@ public class TagReportListenerImplementation implements TagReportListener {
         List<Tag> tags = report.getTags();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             Iterator i = entry.getValue().iterator();
-
             String cur_time = i.next().toString();
             String cur_uuid = entry.getKey();
             String cur_ant = i.next().toString();
             String s = cur_ant;
+            //System.out.println(cur_uuid);
             long last_time = Long.parseLong(cur_time) - System.currentTimeMillis();
             if (last_time < 775000) {
-                System.out.println("not in shelf");
-                s = "{\"uuid\":\'" + cur_uuid + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + cur_ant + "\',\"prevreadtime\":"+ 0 +",\"readtime\":" + Long.parseLong(cur_time) + ",\"status\":\'Exit\'}";
-               // System.out.println(s);
+                System.out.println("\nnot in shelf\t" + last_time);
+                s = "{\"uuid\":\'" + cur_uuid + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + cur_ant + "\',\"readtime\":" + Long.parseLong(cur_time) + "}";
+                // System.out.println(s);
                 try {
 
                     obj = new JSONObject(s);
-                    System.out.println(obj);
+                    System.out.println(obj+"\nexisting tag left");
                     try {
                         SendToREST send = new SendToREST(obj);
+                        map.remove(cur_uuid);
                     } catch (MalformedURLException ex) {
                         Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (IOException ex) {
@@ -54,14 +55,13 @@ public class TagReportListenerImplementation implements TagReportListener {
                     } catch (JSONException ex) {
                         Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                       map.remove(cur_uuid);
+
                 } catch (JSONException ex) {
                     // Logger.getLogger(RFIDLaunch.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-
             } else {
-                System.out.println("in shelf");
+                System.out.println("\nin shelf+\t" + last_time);
             }
         }
         for (Tag t : tags) {
@@ -70,11 +70,24 @@ public class TagReportListenerImplementation implements TagReportListener {
             values.add(1, new String(Integer.toString(t.getAntennaPortNumber())));
             if (!map.containsKey(t.getEpc().toString())) {
                 map.put(t.getEpc().toString(), values);
-                String st = "{\"uuid\":\"" + t.getEpc() + "\",\"antenna\":\"" + t.getAntennaPortNumber() + "\",\"readtime\":\"" + t.getFirstSeenTime().getLocalDateTime().getTime() + "\",\"status\":\"Entry\"}";
+                String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() + "}";
                 try {
 
                     obj = new JSONObject(st);
-                    System.out.println(obj);
+                    System.out.println(obj+"\n new tag added");
+                    try {
+                        SendToREST send = new SendToREST(obj);
+                        //map.remove(cur_uuid);
+                    } catch (MalformedURLException ex) {
+                        Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (JSONException ex) {
+                        Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 } catch (JSONException ex) {
                     // Logger.getLogger(RFIDLaunch.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -90,15 +103,28 @@ public class TagReportListenerImplementation implements TagReportListener {
                 } else {
                     map.remove(t.getEpc().toString());
                     map.put(t.getEpc().toString(), values);
-                    String st = "{\"uuid\":\",\"reader\":\"FLR1SHF \"" + t.getEpc() + "\",\"antenna\":\"" + ant + "\",\"prevreadtime\":\"" + t.getLastSeenTime().getLocalDateTime().getTime() + "\",\"status\":\"Exit\"}";
-                    String st1 = "{\"uuid\":\"" + t.getEpc() + "\",\"reader\":\"FLR1SHF \"" + ",\"antenna\":\"" + t.getAntennaPortNumber() + ",\"readtime\":\"" + t.getFirstSeenTime().getLocalDateTime().getTime() + "\",\"status\":\"Entry\"}";
+                    String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() + "}";
 
+                    //System.out.println(st);
                     try {
+
                         obj = new JSONObject(st);
-                        System.out.println(st);
-                        System.out.println(st1);
+                        System.out.println(obj+"\n tag changed place");
+                        try {
+                            SendToREST send = new SendToREST(obj);
+                            //map.remove(cur_uuid);
+                        } catch (MalformedURLException ex) {
+                            Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (JSONException ex) {
+                            Logger.getLogger(TagReportListenerImplementation.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
                     } catch (JSONException ex) {
-                        //Logger.getLogger(RFIDLaunch.class.getName()).log(Level.SEVERE, null, ex);
+                        // Logger.getLogger(RFIDLaunch.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
 

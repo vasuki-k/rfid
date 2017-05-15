@@ -12,7 +12,7 @@ package rfidjava;
  */
 public class SampleProperties {
 
-    public static String hostname = "192.168.1.122";
+    public static String hostname = "192.168.1.106";
     public static String targetTag = "targetTag";
     public static String qtMode = "qtMode";
     public static String powerDbm = "20.0";
