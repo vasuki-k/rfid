@@ -1,12 +1,18 @@
 package rfidjava;
 
 import com.impinj.octane.*;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ReadTagsPeriodicTrigger {
@@ -15,7 +21,7 @@ public class ReadTagsPeriodicTrigger {
     JSONObject obj;
 
     public static void main(String[] args) {
-
+ JSONObject obj;
         try {
             String hostname = (SampleProperties.hostname);
 
@@ -31,7 +37,7 @@ public class ReadTagsPeriodicTrigger {
 
             AntennaConfigGroup antennas = settings.getAntennas();
             antennas.disableAll();
-            antennas.enableById(new short[]{1, 2});
+            antennas.enableById(new short[]{1, 2,3,4});
             antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
             antennas.getAntenna((short) 1).setIsMaxTxPower(false);
             antennas.getAntenna((short) 1).setTxPowerinDbm(20.0);
@@ -42,6 +48,16 @@ public class ReadTagsPeriodicTrigger {
             antennas.getAntenna((short) 2).setTxPowerinDbm(20.0);
             antennas.getAntenna((short) 2).setRxSensitivityinDbm(-70);
 
+            antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
+            antennas.getAntenna((short) 3).setIsMaxTxPower(false);
+            antennas.getAntenna((short) 3).setTxPowerinDbm(20.0);
+            antennas.getAntenna((short) 3).setRxSensitivityinDbm(-70);
+            
+            antennas.getAntenna((short) 4).setIsMaxRxSensitivity(false);
+            antennas.getAntenna((short) 4).setIsMaxTxPower(false);
+            antennas.getAntenna((short) 4).setTxPowerinDbm(20.0);
+            antennas.getAntenna((short) 4).setRxSensitivityinDbm(-70);
+            
             ReportConfig report = settings.getReport();
             report.setIncludeAntennaPortNumber(true);
             report.setIncludeLastSeenTime(true);

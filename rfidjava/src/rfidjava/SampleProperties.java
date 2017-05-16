@@ -1,18 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package rfidjava;
 
-/**
- * This contains the list of possible properties that can be set for the
- * examples.
- *
- * @author paulfdietrich
- */
 public class SampleProperties {
 
-    public static String hostname = "192.168.1.106";
+    public static String hostname = "192.168.1.122";
     public static String targetTag = "targetTag";
     public static String qtMode = "qtMode";
     public static String powerDbm = "20.0";

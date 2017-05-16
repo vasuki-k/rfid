@@ -26,18 +26,20 @@ public class TagReportListenerImplementation implements TagReportListener {
 
     @Override
     public void onTagReported(ImpinjReader reader, TagReport report) {
+        
         List<Tag> tags = report.getTags();
+        String cur_time,cur_uuid,cur_ant;
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             Iterator i = entry.getValue().iterator();
-            String cur_time = i.next().toString();
-            String cur_uuid = entry.getKey();
-            String cur_ant = i.next().toString();
-            String s = cur_ant;
+            cur_time = i.next().toString();
+            cur_uuid = entry.getKey();
+            cur_ant = i.next().toString();
+            String s;
             //System.out.println(cur_uuid);
             long last_time = Long.parseLong(cur_time) - System.currentTimeMillis();
-            if (last_time < 775000) {
+            if (last_time < 770000) {
                 System.out.println("\nnot in shelf\t" + last_time);
-                s = "{\"uuid\":\'" + cur_uuid + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + cur_ant + "\',\"readtime\":" + Long.parseLong(cur_time) + "}";
+                s = "{\"uuid\":\'" + cur_uuid + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + cur_ant + "\',\"readtime\":" + Long.parseLong(cur_time) +",\"status\":\"exit\"}";
                 // System.out.println(s);
                 try {
 
@@ -67,10 +69,10 @@ public class TagReportListenerImplementation implements TagReportListener {
         for (Tag t : tags) {
             List<String> values = new ArrayList<String>();
             values.add(0, Long.toString(t.getLastSeenTime().getLocalDateTime().getTime()));
-            values.add(1, new String(Integer.toString(t.getAntennaPortNumber())));
+            values.add(1, Integer.toString(t.getAntennaPortNumber()));
             if (!map.containsKey(t.getEpc().toString())) {
                 map.put(t.getEpc().toString(), values);
-                String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() + "}";
+                String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() + ",\"status\":\"entry\"}";
                 try {
 
                     obj = new JSONObject(st);
@@ -103,7 +105,7 @@ public class TagReportListenerImplementation implements TagReportListener {
                 } else {
                     map.remove(t.getEpc().toString());
                     map.put(t.getEpc().toString(), values);
-                    String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() + "}";
+                    String st = "{\"uuid\":\'" + t.getEpc() + "\',\"reader\":\'FLR1SHF\',\"antenna\":\'" + t.getAntennaPortNumber() + "\',\"readtime\":" + t.getFirstSeenTime().getLocalDateTime().getTime() +",\"status\":\"entry\"}";
 
                     //System.out.println(st);
                     try {
