@@ -37,7 +37,7 @@ public class SendToREST {
 
         StringBuilder sb = new StringBuilder();
         int HttpResult = con.getResponseCode();
-        System.out.print(HttpResult);
+        System.out.println(HttpResult);
 
     }
 

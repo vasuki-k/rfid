@@ -37,7 +37,7 @@ public class ReadTagsPeriodicTrigger {
 
             AntennaConfigGroup antennas = settings.getAntennas();
             antennas.disableAll();
-            antennas.enableById(new short[]{1, 2,3,4});
+            antennas.enableById(new short[]{1, 2});
             antennas.getAntenna((short) 1).setIsMaxRxSensitivity(false);
             antennas.getAntenna((short) 1).setIsMaxTxPower(false);
             antennas.getAntenna((short) 1).setTxPowerinDbm(20.0);
@@ -48,15 +48,15 @@ public class ReadTagsPeriodicTrigger {
             antennas.getAntenna((short) 2).setTxPowerinDbm(20.0);
             antennas.getAntenna((short) 2).setRxSensitivityinDbm(-70);
 
-            antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
-            antennas.getAntenna((short) 3).setIsMaxTxPower(false);
-            antennas.getAntenna((short) 3).setTxPowerinDbm(20.0);
-            antennas.getAntenna((short) 3).setRxSensitivityinDbm(-70);
-            
-            antennas.getAntenna((short) 4).setIsMaxRxSensitivity(false);
-            antennas.getAntenna((short) 4).setIsMaxTxPower(false);
-            antennas.getAntenna((short) 4).setTxPowerinDbm(20.0);
-            antennas.getAntenna((short) 4).setRxSensitivityinDbm(-70);
+//            antennas.getAntenna((short) 3).setIsMaxRxSensitivity(false);
+//            antennas.getAntenna((short) 3).setIsMaxTxPower(false);
+//            antennas.getAntenna((short) 3).setTxPowerinDbm(20.0);
+//            antennas.getAntenna((short) 3).setRxSensitivityinDbm(-70);
+//            
+//            antennas.getAntenna((short) 4).setIsMaxRxSensitivity(false);
+//            antennas.getAntenna((short) 4).setIsMaxTxPower(false);
+//            antennas.getAntenna((short) 4).setTxPowerinDbm(20.0);
+//            antennas.getAntenna((short) 4).setRxSensitivityinDbm(-70);
             
             ReportConfig report = settings.getReport();
             report.setIncludeAntennaPortNumber(true);
